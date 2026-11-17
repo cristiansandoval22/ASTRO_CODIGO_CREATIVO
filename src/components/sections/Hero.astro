@@ -1,0 +1,208 @@
+---
+/* ==========================================================
+   HERO — la primera sección que ve el visitante
+   ========================================================== */
+import { Image } from "astro:assets";
+import Button from "../ui/Button.astro";
+import mascota from "../../assets/images/mascota.png";
+import { hero } from "../../data/site.js";
+---
+
+<section class="hero">
+  <!-- Cuadraditos decorativos del logo (aria-hidden: los lectores de pantalla los ignoran) -->
+  <div class="hero__pixeles" aria-hidden="true">
+    <span class="hero__pixel hero__pixel--1"></span>
+    <span class="hero__pixel hero__pixel--2"></span>
+    <span class="hero__pixel hero__pixel--3"></span>
+    <span class="hero__pixel hero__pixel--4"></span>
+    <span class="hero__pixel hero__pixel--5"></span>
+    <span class="hero__pixel hero__pixel--6"></span>
+  </div>
+
+  <div class="container hero__contenido">
+    <!-- Columna de texto -->
+    <div class="hero__texto">
+      <p class="hero__etiqueta">{hero.etiqueta}</p>
+
+      <h1 class="hero__titulo">
+        {hero.titulo}
+        <span class="texto-degradado">{hero.destacado}</span>
+      </h1>
+
+      <p class="hero__descripcion">{hero.descripcion}</p>
+
+      <div class="hero__botones">
+        <Button href="/contacto">{hero.botonPrincipal}</Button>
+        <Button href="/proyectos" variante="secundario">{hero.botonSecundario}</Button>
+      </div>
+    </div>
+
+    <!-- Columna de la mascota -->
+    <div class="hero__imagen">
+      <Image src={mascota} alt="" width={340} loading="eager" class="hero__mascota" />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ==================== Contenedor ==================== */
+  .hero {
+    position: relative; /* los pixeles se ubican respecto a esta sección */
+    overflow: hidden; /* lo que se salga, no se ve */
+    padding-block: var(--espacio-xl);
+    background-color: var(--color-fondo);
+    /* Dos manchas suaves de color: violeta arriba a la derecha, turquesa abajo a la izquierda */
+    background-image:
+      radial-gradient(circle at 85% 25%, rgba(106, 61, 255, 0.15), transparent 40%),
+      radial-gradient(circle at 10% 85%, rgba(33, 212, 197, 0.18), transparent 40%);
+  }
+
+  .hero__contenido {
+    position: relative; /* queda por encima de los pixeles */
+    display: grid;
+    align-items: center;
+    gap: var(--espacio-lg);
+  }
+
+  /* ==================== Texto ==================== */
+  .hero__texto {
+        animation: subir 0.8s ease both;
+  }
+
+  .hero__etiqueta {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--espacio-md);
+    border-radius: var(--radio-pildora);
+    background-color: rgba(36, 87, 255, 0.1);
+    color: var(--color-primario);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-medio);
+  }
+
+  .hero__titulo {
+    margin-bottom: var(--espacio-md);
+  }
+
+  /* El texto destacado baja a su propia línea */
+  .hero__titulo span {
+    display: block;
+  }
+
+  .hero__descripcion {
+    max-width: 52ch;
+    margin-bottom: var(--espacio-lg);
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
+  }
+
+  .hero__botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-sm);
+  }
+
+  /* ==================== Mascota ==================== */
+  .hero__imagen {
+    position: relative;
+    justify-self: center; /* centrada dentro de su columna */
+    animation: aparecer 0.8s ease 0.3s both; /* aparece 0.3s después del texto */
+  }
+
+  .hero__mascota {
+    position: relative;
+    width: 200px;
+    height: auto;
+    animation: flotar-mascota 4s ease-in-out infinite;
+  }
+
+  /* Sombra ovalada debajo de la mascota (como en tu manual) */
+  .hero__imagen::after {
+    content: "";
+    display: block;
+    width: 80%;
+    height: 24px;
+    margin: var(--espacio-sm) auto 0;
+    border-radius: 50%;
+    background-color: rgba(106, 61, 255, 0.15);
+    animation: sombra 4s ease-in-out infinite;
+  }
+
+  /* ==================== Pixeles flotantes ==================== */
+  .hero__pixel {
+    position: absolute;
+    border-radius: 4px;
+    animation: flotar 6s ease-in-out infinite;
+  }
+
+  /* Cada pixel: posición, tamaño, color y retraso diferentes */
+  .hero__pixel--1 {
+    top: 12%;
+    left: 5%;
+    width: 18px;
+    height: 18px;
+    background-color: var(--color-violeta);
+  }
+
+  .hero__pixel--2 {
+    top: 72%;
+    left: 8%;
+    width: 28px;
+    height: 28px;
+    background-color: var(--color-turquesa);
+    animation-delay: -1s;
+  }
+
+  .hero__pixel--3 {
+    top: 18%;
+    left: 52%;
+    width: 14px;
+    height: 14px;
+    background-color: var(--color-azul);
+    animation-delay: -2s;
+  }
+
+  .hero__pixel--4 {
+    top: 85%;
+    left: 48%;
+    width: 22px;
+    height: 22px;
+    background-color: var(--color-violeta);
+    animation-delay: -3s;
+  }
+
+  .hero__pixel--5 {
+    top: 10%;
+    right: 8%;
+    width: 26px;
+    height: 26px;
+    background-color: var(--color-turquesa);
+    animation-delay: -4s;
+  }
+
+  .hero__pixel--6 {
+    top: 62%;
+    right: 4%;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-azul);
+    animation-delay: -5s;
+  }
+
+  /* ==================== Computadora ==================== */
+  @media (min-width: 900px) {
+    .hero {
+      min-height: calc(100vh - 72px); /* pantalla completa menos el header */
+      display: flex;
+      align-items: center;
+    }
+
+    .hero__contenido {
+      grid-template-columns: 1.3fr 0.7fr; /* texto más ancho que la mascota */
+    }
+
+    .hero__mascota {
+      width: 300px;
+    }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+/* ==========================================================
+   CONTACT — invitación a escribir por WhatsApp + redes
+   Se usa al final del Inicio y en la página /contacto
+   ========================================================== */
+import Button from "../ui/Button.astro";
+import { redes, crearEnlaceWhatsapp } from "../../data/site.js";
+---
+
+<section class="section contact">
+  <div class="container">
+    <div class="contact__tarjeta">
+      <!-- Pixeles decorativos -->
+      <span class="contact__pixel contact__pixel--1" aria-hidden="true"></span>
+      <span class="contact__pixel contact__pixel--2" aria-hidden="true"></span>
+      <span class="contact__pixel contact__pixel--3" aria-hidden="true"></span>
+
+      <p class="contact__etiqueta">Contacto</p>
+      <h2 class="contact__titulo">¿Tienes un proyecto en mente?</h2>
+      <p class="contact__descripcion">
+        Cuéntanos tu idea por WhatsApp y te respondemos lo antes posible.
+      </p>
+
+      <Button href={crearEnlaceWhatsapp()} variante="claro" externo>
+        Escríbenos por WhatsApp
+      </Button>
+
+      <p class="contact__subtitulo">O síguenos en redes</p>
+      <ul class="contact__redes">
+        {redes.map((red) => (
+          <li>
+            <a href={red.url} class="contact__red" target="_blank" rel="noopener noreferrer">
+              {red.nombre} ↗
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ---------- Tarjeta grande con el degradado de marca ---------- */
+  .contact__tarjeta {
+    position: relative;
+    overflow: hidden;
+    padding: var(--espacio-xl) var(--espacio-md);
+    border-radius: var(--radio-lg);
+    background: var(--degradado-marca);
+    color: var(--color-blanco);
+    text-align: center;
+  }
+
+  .contact__etiqueta {
+    margin-bottom: var(--espacio-xs);
+    font-family: var(--fuente-titulos);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.85;
+  }
+
+  .contact__titulo {
+    margin-bottom: var(--espacio-sm);
+  }
+
+  .contact__descripcion {
+    max-width: 48ch;
+    margin: 0 auto var(--espacio-lg);
+    font-size: var(--texto-lg);
+    opacity: 0.9;
+  }
+
+  .contact__subtitulo {
+    margin-top: var(--espacio-xl);
+    margin-bottom: var(--espacio-sm);
+    font-size: var(--texto-sm);
+    opacity: 0.85;
+  }
+
+  /* ---------- Redes ---------- */
+  .contact__redes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--espacio-xs);
+  }
+
+  .contact__red {
+    display: inline-block;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radio-pildora);
+    font-weight: var(--peso-medio);
+    transition:
+      background-color var(--transicion-rapida),
+      color var(--transicion-rapida);
+  }
+
+  .contact__red:hover {
+    background-color: var(--color-blanco);
+    color: var(--color-primario);
+  }
+
+  /* ---------- Pixeles decorativos ---------- */
+  .contact__pixel {
+    position: absolute;
+    border-radius: 4px;
+    background-color: var(--color-turquesa);
+    animation: flotar 6s ease-in-out infinite;
+  }
+
+  .contact__pixel--1 {
+    top: 15%;
+    left: 6%;
+    width: 22px;
+    height: 22px;
+  }
+
+  .contact__pixel--2 {
+    bottom: 18%;
+    left: 12%;
+    width: 14px;
+    height: 14px;
+    animation-delay: -2s;
+  }
+
+  .contact__pixel--3 {
+    top: 20%;
+    right: 8%;
+    width: 28px;
+    height: 28px;
+    animation-delay: -4s;
+  }
+
+  @media (min-width: 900px) {
+    .contact__tarjeta {
+      padding: var(--espacio-xl);
+    }
+  }
+</style>

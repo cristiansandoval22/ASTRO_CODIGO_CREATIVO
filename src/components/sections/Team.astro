@@ -1,0 +1,49 @@
+---
+/* ==========================================================
+   TEAM — el equipo de Código Creativo
+   ========================================================== */
+import SectionTitle from "../ui/SectionTitle.astro";
+import TeamCard from "../ui/TeamCard.astro";
+import { equipo } from "../../data/team.js";
+---
+
+<section class="section team">
+  <div class="container">
+    <SectionTitle
+      etiqueta="Equipo"
+      titulo="Las personas detrás del código"
+      descripcion="Un equipo joven, creativo y en constante aprendizaje."
+    />
+
+    <ul class="team__lista">
+      {equipo.map((persona) => (
+        <li>
+          <TeamCard nombre={persona.nombre} rol={persona.rol} />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .team {
+    background-color: var(--color-superficie); /* blanco, para separarla de About */
+  }
+
+  .team__lista {
+    display: grid;
+    gap: var(--espacio-md);
+  }
+
+  @media (min-width: 640px) {
+    .team__lista {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .team__lista {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

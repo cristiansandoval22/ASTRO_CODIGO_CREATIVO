@@ -1,0 +1,78 @@
+---
+/* ==========================================================
+   TEAM CARD — tarjeta de un integrante del equipo
+
+   Uso:
+   <TeamCard nombre="Cristian" rol="Fundador" />
+   ========================================================== */
+
+const { nombre, rol } = Astro.props;
+
+// "Integrante Uno" → "IU"   |   "Cristian" → "C"
+const obtenerIniciales = (texto:string) => {
+  const palabras = texto.split(" ");
+  let iniciales = "";
+
+  for (let palabra of palabras) {
+    iniciales = iniciales + palabra[0];
+  }
+
+  return iniciales.slice(0, 2).toUpperCase();
+};
+---
+
+<article class="team-card">
+  <div class="team-card__avatar" aria-hidden="true">
+    {obtenerIniciales(nombre)}
+  </div>
+  <h3 class="team-card__nombre">{nombre}</h3>
+  <p class="team-card__rol">{rol}</p>
+</article>
+
+<style>
+  .team-card {
+    padding: var(--espacio-lg) var(--espacio-md);
+    border-radius: var(--radio-lg);
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-borde);
+    text-align: center;
+    transition:
+      transform var(--transicion-normal),
+      border-color var(--transicion-normal);
+  }
+
+  .team-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-primario);
+  }
+
+  /* Círculo con degradado y las iniciales */
+  .team-card__avatar {
+    display: grid;
+    place-items: center; /* centra el texto horizontal y verticalmente */
+    width: 96px;
+    height: 96px;
+    margin: 0 auto var(--espacio-md);
+    border-radius: 50%;
+    background: var(--degradado-marca);
+    color: var(--color-blanco);
+    font-family: var(--fuente-titulos);
+    font-size: var(--texto-2xl);
+    font-weight: var(--peso-extrabold);
+    transition: transform var(--transicion-normal);
+  }
+
+  /* El avatar gira un poquito al pasar el mouse */
+  .team-card:hover .team-card__avatar {
+    transform: rotate(-8deg) scale(1.05);
+  }
+
+  .team-card__nombre {
+    margin-bottom: 0.25rem;
+  }
+
+  .team-card__rol {
+    font-size: var(--texto-sm);
+    color: var(--color-texto-suave);
+  }
+</style>

@@ -1,0 +1,19 @@
+---
+/* ==========================================================
+   PÁGINA DE INICIO → /
+   Aquí solo "armamos" la página con secciones.
+   Cada sección vive en su propio componente.
+   ========================================================== */
+import MainLayout from "../layouts/MainLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import Services from "../components/sections/Services.astro";
+import Projects from "../components/sections/Projects.astro";
+import Contact from "../components/sections/Contact.astro";
+---
+
+<MainLayout>
+  <Hero />
+  <Services />
+  <Projects soloDestacados />
+  <Contact />
+</MainLayout>

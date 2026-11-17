@@ -1,0 +1,76 @@
+---
+/* ==========================================================
+   MAIN LAYOUT
+   La "plantilla" que comparten todas las páginas:
+   <html>, <head>, estilos globales y el <body>.
+   Cada página pone su contenido donde está <slot />.
+   ========================================================== */
+
+// 1. Estilos globales (el orden importa)
+import "../styles/fonts.css";
+import "../styles/reset.css";
+import "../styles/variables.css";
+import "../styles/global.css";
+import "../styles/utilities.css";
+
+// 2. Componentes del layout
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+
+// 3. Datos generales del sitio
+import { sitio } from "../data/site.js";
+
+// 4. Datos que cada página puede enviar (props)
+const { titulo, descripcion = sitio.descripcion } = Astro.props;
+
+// Si la página envía un título: "Servicios | Código Creativo"
+// Si no envía nada: "Código Creativo | Soluciones creativas..."
+const tituloCompleto = titulo
+  ? `${titulo} | ${sitio.nombre}`
+  : `${sitio.nombre} | ${sitio.slogan}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <meta name="theme-color" content="#0e1633" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <!-- Vista previa al compartir en redes (Open Graph) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={sitio.nombre} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:locale" content="es_PE" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Precarga de las 2 fuentes más usadas: aparecen más rápido -->
+    <link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/sora-extrabold.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+
+  <body>
+    <!-- Accesibilidad: permite saltar el menú con el teclado -->
+    <a href="#contenido" class="saltar-contenido">Saltar al contenido</a>
+
+    <Header />
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      import "../scripts/animations.js";
+    </script>
+  </body>
+</html>

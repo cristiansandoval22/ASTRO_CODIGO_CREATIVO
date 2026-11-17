@@ -1,0 +1,54 @@
+---
+/* ==========================================================
+   PAGE HEADER — encabezado con <h1> para páginas internas
+
+   Uso:
+   <PageHeader etiqueta="Servicios" titulo="..." descripcion="..." />
+   ========================================================== */
+
+const { etiqueta, titulo, descripcion } = Astro.props;
+---
+
+<section class="page-header">
+  <div class="container page-header__contenido">
+    <p class="page-header__etiqueta">{etiqueta}</p>
+    <h1 class="page-header__titulo">{titulo}</h1>
+    {descripcion && <p class="page-header__descripcion">{descripcion}</p>}
+  </div>
+</section>
+
+<style>
+  .page-header {
+    padding-block: var(--espacio-xl);
+    text-align: center;
+    background-image:
+      radial-gradient(circle at 15% 30%, rgba(33, 212, 197, 0.18), transparent 35%),
+      radial-gradient(circle at 85% 70%, rgba(106, 61, 255, 0.15), transparent 35%);
+  }
+
+  .page-header__contenido {
+    max-width: 760px;
+    animation: aparecer 0.8s ease both;
+  }
+
+  .page-header__etiqueta {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--espacio-md);
+    border-radius: var(--radio-pildora);
+    background-color: rgba(36, 87, 255, 0.1);
+    color: var(--color-primario);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-medio);
+  }
+
+  .page-header__titulo {
+    margin-bottom: var(--espacio-sm);
+  }
+
+  .page-header__descripcion {
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
+  }
+
+</style>

@@ -1,0 +1,75 @@
+/* ==========================================================
+   RESET
+   Cada navegador trae estilos propios (márgenes, tamaños...).
+   Este archivo los "limpia" para partir de una base igual.
+   ========================================================== */
+
+/* El ancho de un elemento incluye su padding y borde */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Quitamos los márgenes que el navegador pone por defecto */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  /* Evita que el texto cambie de tamaño al girar el móvil */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Las imágenes nunca se salen de su contenedor */
+img,
+picture,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Los formularios usan la misma fuente que el resto */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* Los títulos largos no rompen el diseño */
+p,
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
+}
+
+/* Las listas con clase no muestran viñetas */
+ul[class],
+ol[class] {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

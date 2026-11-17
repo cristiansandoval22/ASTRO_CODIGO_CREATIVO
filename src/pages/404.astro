@@ -1,0 +1,81 @@
+---
+/* ==========================================================
+   PÁGINA 404 — se muestra cuando una dirección no existe
+   ========================================================== */
+import { Image } from "astro:assets";
+import MainLayout from "../layouts/MainLayout.astro";
+import Button from "../components/ui/Button.astro";
+import mascota from "../assets/images/mascota.png";
+---
+
+<MainLayout titulo="Página no encontrada">
+  <section class="section error">
+    <div class="container error__contenido">
+      <div class="error__imagen">
+        <Image src={mascota} alt="" width={200} loading="eager" class="error__mascota" />
+      </div>
+
+      <p class="error__codigo texto-degradado">404</p>
+      <h1 class="error__titulo">¡Ups! Esta página se perdió</h1>
+      <p class="error__descripcion">
+        Nuestro cursor buscó por todos lados, pero no encontró lo que buscas.
+      </p>
+
+      <div class="error__botones">
+        <Button href="/">Volver al inicio</Button>
+        <Button href="/proyectos" variante="secundario">Ver proyectos</Button>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .error__contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .error__mascota {
+    width: 140px;
+    height: auto;
+    /* La mascota se balancea como buscando algo */
+    animation: buscar 3s ease-in-out infinite;
+  }
+
+  .error__codigo {
+    font-family: var(--fuente-titulos);
+    font-size: clamp(5rem, 3rem + 10vw, 9rem);
+    font-weight: var(--peso-extrabold);
+    line-height: 1;
+  }
+
+  .error__titulo {
+    margin-bottom: var(--espacio-sm);
+    font-size: var(--texto-3xl);
+  }
+
+  .error__descripcion {
+    max-width: 42ch;
+    margin-bottom: var(--espacio-lg);
+    color: var(--color-texto-suave);
+  }
+
+  .error__botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--espacio-sm);
+  }
+
+  @keyframes buscar {
+    0%,
+    100% {
+      transform: rotate(-8deg);
+    }
+    50% {
+      transform: rotate(8deg);
+    }
+  }
+</style>

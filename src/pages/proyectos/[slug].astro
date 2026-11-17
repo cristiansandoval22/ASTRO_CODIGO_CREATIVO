@@ -1,0 +1,28 @@
+---
+/* ==========================================================
+   PÁGINA DE CADA PROYECTO → /proyectos/nombre-del-archivo
+   Un solo archivo crea una página por cada .md
+   ========================================================== */
+import { getCollection, render } from "astro:content";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+// 1. Le decimos a Astro qué páginas crear: una por proyecto
+export async function getStaticPaths() {
+  const proyectos = await getCollection("proyectos");
+
+  return proyectos.map((proyecto) => ({
+    params: { slug: proyecto.id }, // la parte [slug] de la dirección
+    props: { proyecto }, // los datos que recibe la página
+  }));
+}
+
+// 2. Recibimos el proyecto de esta página
+const { proyecto } = Astro.props;
+
+// 3. Convertimos el Markdown en HTML
+const { Content } = await render(proyecto);
+---
+
+<ProjectLayout proyecto={proyecto}>
+  <Content />
+</ProjectLayout>

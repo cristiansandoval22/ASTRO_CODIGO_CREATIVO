@@ -1,0 +1,167 @@
+---
+/* ==========================================================
+   FOOTER — marca, enlaces, redes y derechos de autor
+   ========================================================== */
+import { Image } from "astro:assets";
+import isotipoBlanco from "../../assets/images/isotipo-blanco.png";
+import { sitio, menu, redes, crearEnlaceWhatsapp } from "../../data/site.js";
+
+// Año actual, para que el © se actualice solo cada año
+const anioActual = new Date().getFullYear();
+
+// Enlace de WhatsApp con el mensaje general de site.js
+const enlaceWhatsapp = crearEnlaceWhatsapp();
+---
+
+<footer class="footer">
+  <div class="container footer__contenido">
+    <!-- Columna 1: marca -->
+    <div class="footer__marca">
+      <Image src={isotipoBlanco} alt="" width={48} class="footer__isotipo" />
+      <p class="footer__nombre">{sitio.nombre}</p>
+      <p class="footer__slogan">{sitio.slogan}</p>
+    </div>
+
+    <!-- Columna 2: páginas -->
+    <nav class="footer__columna" aria-label="Menú del pie de página">
+      <h2 class="footer__titulo">Páginas</h2>
+      <ul class="footer__lista">
+        {menu.map((enlace) => (
+          <li>
+            <a href={enlace.url} class="footer__enlace">{enlace.texto}</a>
+          </li>
+        ))}
+        <li>
+          <a href="/contacto" class="footer__enlace">Contacto</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Columna 3: redes y WhatsApp -->
+    <div class="footer__columna">
+      <h2 class="footer__titulo">Síguenos</h2>
+      <ul class="footer__redes">
+        {redes.map((red) => (
+          <li>
+            <a href={red.url} class="footer__red" target="_blank" rel="noopener noreferrer">
+              {red.nombre}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <a href={enlaceWhatsapp} class="footer__whatsapp" target="_blank" rel="noopener noreferrer">
+        Escríbenos por WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="footer__inferior">
+    <p class="container">© {anioActual} {sitio.nombre}. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-claro);
+    padding-top: var(--espacio-xl);
+  }
+
+  /* Móvil: una columna. Computadora: tres columnas (ver media query) */
+  .footer__contenido {
+    display: grid;
+    gap: var(--espacio-lg);
+    padding-bottom: var(--espacio-xl);
+  }
+
+  /* ---------- Marca ---------- */
+  .footer__isotipo {
+    width: 48px;
+    height: auto;
+    margin-bottom: var(--espacio-sm);
+  }
+
+  .footer__nombre {
+    font-family: var(--fuente-titulos);
+    font-weight: var(--peso-extrabold);
+    font-size: var(--texto-xl);
+  }
+
+  .footer__slogan {
+    color: rgba(247, 249, 255, 0.7);
+    max-width: 28ch; /* ch = ancho de un carácter: máximo ~28 letras por línea */
+  }
+
+  /* ---------- Columnas ---------- */
+  .footer__titulo {
+    font-size: var(--texto-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-acento);
+    margin-bottom: var(--espacio-sm);
+  }
+
+  .footer__lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-xs);
+  }
+
+  .footer__enlace {
+    color: rgba(247, 249, 255, 0.8);
+    transition: color var(--transicion-rapida);
+  }
+
+  .footer__enlace:hover {
+    color: var(--color-acento);
+  }
+
+  /* ---------- Redes: pastillas ---------- */
+  .footer__redes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-xs);
+    margin-bottom: var(--espacio-md);
+  }
+
+  .footer__red {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(247, 249, 255, 0.25);
+    border-radius: var(--radio-pildora);
+    font-size: var(--texto-sm);
+    transition:
+      border-color var(--transicion-rapida),
+      color var(--transicion-rapida);
+  }
+
+  .footer__red:hover {
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+  }
+
+  .footer__whatsapp {
+    display: inline-block;
+    font-weight: var(--peso-medio);
+    color: var(--color-acento);
+    border-bottom: 2px solid currentColor; /* currentColor = el mismo color del texto */
+  }
+
+  /* ---------- Barra inferior ---------- */
+  .footer__inferior {
+    border-top: 1px solid rgba(247, 249, 255, 0.1);
+    padding-block: var(--espacio-md);
+    font-size: var(--texto-sm);
+    color: rgba(247, 249, 255, 0.6);
+    text-align: center;
+  }
+
+  /* ---------- Computadora ---------- */
+  @media (min-width: 768px) {
+    .footer__contenido {
+      grid-template-columns: 2fr 1fr 1.5fr; /* la marca ocupa más espacio */
+    }
+  }
+</style>

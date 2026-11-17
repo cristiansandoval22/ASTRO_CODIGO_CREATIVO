@@ -1,0 +1,20 @@
+---
+/* ==========================================================
+   PÁGINA PROYECTOS → /proyectos
+   ========================================================== */
+import MainLayout from "../../layouts/MainLayout.astro";
+import PageHeader from "../../components/ui/PageHeader.astro";
+import Projects from "../../components/sections/Projects.astro";
+---
+
+<MainLayout
+  titulo="Proyectos"
+  descripcion="Proyectos de edición de video, diseño gráfico y streaming realizados por Código Creativo."
+>
+  <PageHeader
+    etiqueta="Proyectos"
+    titulo="Nuestro trabajo"
+    descripcion="Cada proyecto cuenta una historia: el reto, lo que hicimos y lo que aprendimos."
+  />
+  <Projects mostrarBoton={false} />
+</MainLayout>

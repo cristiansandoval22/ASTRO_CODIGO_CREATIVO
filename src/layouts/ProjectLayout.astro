@@ -1,0 +1,147 @@
+---
+/* ==========================================================
+   PROJECT LAYOUT — diseño de la página de cada proyecto
+   El texto del .md se coloca donde está <slot />.
+   ========================================================== */
+import { Image } from "astro:assets";
+import MainLayout from "./MainLayout.astro";
+import Button from "../components/ui/Button.astro";
+
+const { proyecto } = Astro.props;
+const { titulo, descripcion, fecha, categoria, portada, enlace } = proyecto.data;
+
+const fechaTexto = fecha.toLocaleDateString("es-PE", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<MainLayout titulo={titulo} descripcion={descripcion}>
+  <article class="proyecto">
+    <header class="container proyecto__cabecera">
+      <a href="/proyectos" class="proyecto__volver">← Volver a proyectos</a>
+      <p class="proyecto__categoria">{categoria}</p>
+      <h1 class="proyecto__titulo">{titulo}</h1>
+      <p class="proyecto__descripcion">{descripcion}</p>
+      <p class="proyecto__fecha">{fechaTexto}</p>
+    </header>
+
+    {portada && (
+      <div class="container">
+        <Image src={portada} alt="" width={1200} class="proyecto__portada" loading="eager" />
+      </div>
+    )}
+
+    <!-- Aquí aparece el texto del archivo .md -->
+    <div class="container proyecto__contenido">
+      <slot />
+    </div>
+
+    {enlace && (
+      <div class="container proyecto__accion">
+        <Button href={enlace} externo>Ver proyecto en vivo ↗</Button>
+      </div>
+    )}
+  </article>
+</MainLayout>
+
+<style>
+  .proyecto {
+    padding-bottom: var(--espacio-seccion);
+  }
+
+  /* ---------- Cabecera ---------- */
+  .proyecto__cabecera {
+    max-width: 760px;
+    padding-block: var(--espacio-xl) var(--espacio-lg);
+  }
+
+  .proyecto__volver {
+    display: inline-block;
+    margin-bottom: var(--espacio-lg);
+    color: var(--color-texto-suave);
+    transition: color var(--transicion-rapida);
+  }
+
+  .proyecto__volver:hover {
+    color: var(--color-primario);
+  }
+
+  .proyecto__categoria {
+    margin-bottom: var(--espacio-xs);
+    font-weight: var(--peso-medio);
+    color: var(--color-primario);
+  }
+
+  .proyecto__titulo {
+    margin-bottom: var(--espacio-sm);
+  }
+
+  .proyecto__descripcion {
+    margin-bottom: var(--espacio-xs);
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
+  }
+
+  .proyecto__fecha {
+    font-size: var(--texto-sm);
+    color: var(--color-texto-suave);
+  }
+
+  .proyecto__portada {
+    width: 100%;
+    margin-bottom: var(--espacio-xl);
+    border-radius: var(--radio-lg);
+  }
+
+  /* ---------- Contenido del .md ----------
+     :global() hace que estos estilos lleguen al HTML que viene
+     del Markdown (Astro no puede agregarle sus marcas). */
+  .proyecto__contenido {
+    max-width: 760px; /* líneas cortas = lectura más cómoda */
+  }
+
+  .proyecto__contenido :global(h2) {
+    margin-top: var(--espacio-lg);
+    margin-bottom: var(--espacio-sm);
+    font-size: var(--texto-2xl);
+  }
+
+  .proyecto__contenido :global(p) {
+    margin-bottom: var(--espacio-sm);
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
+  }
+
+  /* Tu reset quitó el padding de las listas: aquí lo devolvemos */
+  .proyecto__contenido :global(ul),
+  .proyecto__contenido :global(ol) {
+    padding-left: var(--espacio-md);
+    margin-bottom: var(--espacio-sm);
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
+  }
+
+  .proyecto__contenido :global(li) {
+    margin-bottom: var(--espacio-xs);
+  }
+
+  .proyecto__contenido :global(li::marker) {
+    color: var(--color-acento); /* viñetas turquesa */
+  }
+
+  .proyecto__contenido :global(strong) {
+    color: var(--color-texto);
+  }
+
+  .proyecto__contenido :global(a) {
+    color: var(--color-primario);
+    text-decoration: underline;
+  }
+
+  .proyecto__accion {
+    max-width: 760px;
+    margin-top: var(--espacio-lg);
+  }
+</style>

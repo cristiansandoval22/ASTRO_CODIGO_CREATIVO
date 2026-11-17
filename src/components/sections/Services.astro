@@ -1,0 +1,89 @@
+  ---
+  /* ==========================================================
+     SERVICES — resumen de servicios en la página de inicio
+     ========================================================== */
+  import SectionTitle from "../ui/SectionTitle.astro";
+  import Card from "../ui/Card.astro";
+  import Button from "../ui/Button.astro";
+  import { servicios } from "../../data/services.js";
+  
+  // Convierte 1 en "01", 2 en "02"...
+  const formatearNumero = (numero:number) => String(numero).padStart(2, "0");
+  
+  // En la página /servicios no mostramos el botón "Ver todos"
+  const { mostrarBoton = true } = Astro.props;
+  ---
+  
+  <section class="section section--oscura services">
+    <div class="container">
+      <SectionTitle
+        etiqueta="Servicios"
+        titulo="Lo que hacemos por tu marca"
+        descripcion="Soluciones creativas para que tu negocio crezca en el mundo digital."
+      />
+  
+      <ul class="services__lista">
+        {servicios.map((servicio, indice) => (
+          <li>
+            <Card>
+              <span class="services__numero">{formatearNumero(indice + 1)}</span>
+              <h3 class="services__titulo">{servicio.titulo}</h3>
+              <p class="services__descripcion">{servicio.descripcion}</p>
+            </Card>
+          </li>
+        ))}
+      </ul>
+  
+      {mostrarBoton && (
+    <div class="services__accion">
+      <Button href="/servicios">Ver todos los servicios</Button>
+    </div>
+      )}
+    </div>
+  </section>
+  
+  <style>
+    /* Grid: 1 columna en móvil, 2 en tablet, 4 en computadora */
+    .services__lista {
+      display: grid;
+      gap: var(--espacio-md);
+    }
+  
+    @media (min-width: 640px) {
+      .services__lista {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  
+    @media (min-width: 1024px) {
+      .services__lista {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  
+    .services__numero {
+      display: inline-block;
+      margin-bottom: var(--espacio-md);
+      font-family: var(--fuente-titulos);
+      font-size: var(--texto-3xl);
+      font-weight: var(--peso-extrabold);
+      line-height: 1;
+      background: var(--degradado-marca);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  
+    .services__titulo {
+      margin-bottom: var(--espacio-xs);
+    }
+  
+    .services__descripcion {
+      color: var(--color-texto-suave);
+    }
+  
+    .services__accion {
+      margin-top: var(--espacio-xl);
+      text-align: center;
+    }
+  </style>

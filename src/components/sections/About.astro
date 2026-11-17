@@ -1,0 +1,130 @@
+---
+/* ==========================================================
+   ABOUT — quiénes somos y nuestros valores
+   Usa <h1> porque es la primera sección de la página Nosotros.
+   ========================================================== */
+import { Image } from "astro:assets";
+import isotipo from "../../assets/images/isotipo.png";
+import { nosotros } from "../../data/site.js";
+---
+
+<section class="section about">
+  <div class="container about__contenido">
+    <!-- Texto -->
+    <div class="about__texto">
+      <p class="about__etiqueta">{nosotros.etiqueta}</p>
+      <h1 class="about__titulo">{nosotros.titulo}</h1>
+
+      {nosotros.parrafos.map((parrafo) => (
+        <p class="about__parrafo">{parrafo}</p>
+      ))}
+    </div>
+
+    <!-- Isotipo decorativo -->
+    <div class="about__visual" aria-hidden="true">
+      <Image src={isotipo} alt="" width={260} class="about__isotipo" />
+    </div>
+  </div>
+
+  <!-- Valores -->
+  <ul class="container about__valores">
+    {nosotros.valores.map((valor) => (
+      <li class="about__valor">
+        <span class="about__pixel"></span>
+        <h2 class="about__valor-titulo">{valor.titulo}</h2>
+        <p>{valor.descripcion}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .about__contenido {
+    display: grid;
+    align-items: center;
+    gap: var(--espacio-xl);
+    margin-bottom: var(--espacio-xl);
+  }
+
+  .about__etiqueta {
+    margin-bottom: var(--espacio-xs);
+    font-family: var(--fuente-titulos);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primario);
+  }
+
+  .about__titulo {
+    margin-bottom: var(--espacio-md);
+  }
+
+  .about__parrafo {
+    max-width: 60ch;
+    margin-bottom: var(--espacio-sm);
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
+  }
+
+  /* ---------- Isotipo con un fondo de degradado suave ---------- */
+  .about__visual {
+    display: grid;
+    place-items: center;
+    padding: var(--espacio-xl);
+    border-radius: var(--radio-lg);
+    background:
+      radial-gradient(circle at 30% 30%, rgba(33, 212, 197, 0.2), transparent 60%),
+      radial-gradient(circle at 70% 70%, rgba(106, 61, 255, 0.2), transparent 60%);
+  }
+
+  .about__isotipo {
+    width: 180px;
+    height: auto;
+    transition: transform var(--transicion-normal);
+  }
+
+  .about__visual:hover .about__isotipo {
+    transform: rotate(-6deg) scale(1.05);
+  }
+
+  /* ---------- Valores ---------- */
+  .about__valores {
+    display: grid;
+    gap: var(--espacio-md);
+  }
+
+  .about__valor {
+    padding: var(--espacio-md);
+    border-left: 3px solid var(--color-acento);
+  }
+
+  .about__pixel {
+    display: block;
+    width: 14px;
+    height: 14px;
+    margin-bottom: var(--espacio-sm);
+    border-radius: 3px;
+    background: var(--degradado-marca);
+  }
+
+  .about__valor-titulo {
+    margin-bottom: var(--espacio-xs);
+    font-size: var(--texto-xl);
+  }
+
+  /* ---------- Computadora ---------- */
+  @media (min-width: 900px) {
+    .about__contenido {
+      grid-template-columns: 1.4fr 1fr;
+    }
+
+    .about__isotipo {
+      width: 240px;
+    }
+
+    .about__valores {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

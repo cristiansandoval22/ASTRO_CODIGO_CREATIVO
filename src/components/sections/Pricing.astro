@@ -1,0 +1,42 @@
+---
+/* ==========================================================
+   PRICING — los planes de precios
+   ========================================================== */
+import SectionTitle from "../ui/SectionTitle.astro";
+import PricingCard from "../ui/PricingCard.astro";
+import { planes, moneda } from "../../data/pricing.js";
+---
+
+<section class="section pricing">
+  <div class="container">
+    <SectionTitle
+      etiqueta="Precios"
+      titulo="Planes a tu medida"
+      descripcion="Elige el plan que mejor se adapte a tu marca. ¿Necesitas algo especial? Escríbenos."
+    />
+
+    <ul class="pricing__lista">
+      {planes.map((plan) => (
+        <li>
+          <PricingCard plan={plan} moneda={moneda} />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .pricing__lista {
+    display: grid;
+    gap: var(--espacio-xl) var(--espacio-md); /* más espacio vertical por la insignia */
+    max-width: 1080px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 900px) {
+    .pricing__lista {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+    }
+  }
+</style>

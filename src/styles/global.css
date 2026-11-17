@@ -1,0 +1,126 @@
+/* ==========================================================
+   GLOBAL
+   Estilos generales que afectan a TODO el sitio.
+   Los estilos de cada sección van dentro de su componente.
+   ========================================================== */
+
+html {
+  scroll-behavior: smooth; /* scroll suave al hacer clic en un enlace #ancla */
+}
+
+body {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-normal);
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+}
+
+/* ---------- Títulos ---------- */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fuente-titulos);
+  font-weight: var(--peso-bold);
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: var(--texto-4xl);
+  font-weight: var(--peso-extrabold);
+}
+
+h2 {
+  font-size: var(--texto-3xl);
+}
+
+h3 {
+  font-size: var(--texto-xl);
+}
+
+/* ---------- Texto seleccionado con colores de marca ---------- */
+::selection {
+  background-color: var(--color-acento);
+  color: var(--color-marino);
+}
+
+/* ---------- Accesibilidad: foco visible al navegar con teclado ---------- */
+:focus-visible {
+  outline: 3px solid var(--color-acento);
+  outline-offset: 3px;
+  border-radius: var(--radio-sm);
+}
+
+/* ---------- Accesibilidad: "reducir movimiento" ----------
+   Si la persona activó esa opción en su sistema,
+   apagamos animaciones y transiciones. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+
+
+/* ==========================================================
+   ANIMACIONES COMPARTIDAS
+   Cualquier componente puede usarlas por su nombre.
+   ========================================================== */
+
+/* Entrada: aparece desde abajo */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pixeles decorativos: suben, bajan y giran un poco */
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(12deg);
+  }
+}
+  /* Entrada del texto SIN opacidad: el título es visible desde el inicio
+     (mejor para el LCP que mide Lighthouse) */
+  @keyframes subir {
+    from {
+      transform: translateY(30px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+/* ---------- Aparecer al hacer scroll ----------
+   animations.js agrega .animar a los elementos y,
+   cuando entran en pantalla, les agrega .visible */
+.animar {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.animar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

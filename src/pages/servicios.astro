@@ -1,0 +1,22 @@
+---
+/* ==========================================================
+   PÁGINA SERVICIOS → /servicios
+   ========================================================== */
+import MainLayout from "../layouts/MainLayout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Services from "../components/sections/Services.astro";
+import Pricing from "../components/sections/Pricing.astro";
+---
+
+<MainLayout
+  titulo="Servicios"
+  descripcion="Edición de video, diseño gráfico, grabación de contenido y soporte SRT para streamers. Conoce nuestros planes."
+>
+  <PageHeader
+    etiqueta="Servicios"
+    titulo="Soluciones creativas para tu marca"
+    descripcion="Todo lo que necesitas para destacar en redes sociales y en tus transmisiones en vivo."
+  />
+  <Services mostrarBoton={false} />
+  <Pricing />
+</MainLayout>

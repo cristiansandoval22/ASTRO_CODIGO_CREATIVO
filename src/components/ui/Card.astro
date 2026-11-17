@@ -1,0 +1,54 @@
+---
+/* ==========================================================
+   CARD — tarjeta genérica. Lo que pongas dentro va en <slot />.
+
+   Uso:
+   <Card>
+     <h3>Título</h3>
+     <p>Texto</p>
+   </Card>
+   ========================================================== */
+---
+
+<article class="card">
+  <slot />
+</article>
+
+<style>
+  .card {
+    position: relative;
+    overflow: hidden;
+    height: 100%; /* todas las tarjetas de una fila miden igual */
+    padding: var(--espacio-lg) var(--espacio-md);
+    border-radius: var(--radio-lg);
+    background-color: var(--color-superficie);
+    color: var(--color-texto);
+    box-shadow: var(--sombra-suave);
+    transition:
+      transform var(--transicion-normal),
+      box-shadow var(--transicion-normal);
+  }
+
+  /* Barra de degradado arriba, oculta al inicio */
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--degradado-marca);
+    transform: scaleX(0); /* ancho 0: no se ve */
+    transform-origin: left; /* crecerá desde la izquierda */
+    transition: transform var(--transicion-normal);
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-fuerte);
+  }
+
+  .card:hover::before {
+    transform: scaleX(1); /* la barra se "dibuja" de izquierda a derecha */
+  }
+</style>

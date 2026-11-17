@@ -1,0 +1,78 @@
+---
+/* ==========================================================
+   BUTTON — botón reutilizable (en realidad es un enlace <a>)
+
+   Uso:
+   <Button href="/contacto">Contáctanos</Button>
+   <Button href="/servicios" variante="secundario">Ver más</Button>
+   <Button href="https://..." variante="claro" externo>WhatsApp</Button>
+
+   Variantes: "primario" (por defecto), "secundario", "claro"
+   ========================================================== */
+
+const { href, variante = "primario", externo = false } = Astro.props;
+---
+
+<a
+  href={href}
+  class={`boton boton--${variante}`}
+  target={externo ? "_blank" : undefined}
+  rel={externo ? "noopener noreferrer" : undefined}
+>
+  <slot />
+</a>
+
+<style>
+  .boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-xs);
+    padding: 0.8rem 1.6rem;
+    border-radius: var(--radio-pildora);
+    font-family: var(--fuente-titulos);
+    font-weight: var(--peso-bold);
+    font-size: var(--texto-sm);
+    transition:
+      transform var(--transicion-rapida),
+      box-shadow var(--transicion-rapida),
+      background-color var(--transicion-rapida),
+      color var(--transicion-rapida);
+  }
+
+  /* Al pasar el mouse, el botón "sube" un poquito */
+  .boton:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ---------- Variante primaria: degradado de marca ---------- */
+  .boton--primario {
+    background: var(--degradado-marca);
+    color: var(--color-blanco);
+  }
+
+  .boton--primario:hover {
+    box-shadow: var(--sombra-fuerte);
+  }
+
+  /* ---------- Variante secundaria: solo borde ---------- */
+  .boton--secundario {
+    border: 2px solid var(--color-primario);
+    color: var(--color-primario);
+  }
+
+  .boton--secundario:hover {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+  }
+
+  /* ---------- Variante clara: botón blanco para fondos de color ---------- */
+  .boton--claro {
+    background-color: var(--color-blanco);
+    color: var(--color-primario);
+  }
+
+  .boton--claro:hover {
+    box-shadow: 0 12px 40px rgba(14, 22, 51, 0.35);
+  }
+</style>

@@ -1,0 +1,42 @@
+/* ==========================================================
+   FUENTES
+   Cargamos Sora e Inter desde nuestra propia carpeta
+   public/fonts/ (más rápido y sin depender de Google Fonts).
+
+   font-display: swap → mientras la fuente carga, se muestra
+   una fuente del sistema, así el texto nunca queda invisible.
+   ========================================================== */
+
+/* ---------- Inter (textos) ---------- */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Sora (títulos) ---------- */
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/sora-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/sora-extrabold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}

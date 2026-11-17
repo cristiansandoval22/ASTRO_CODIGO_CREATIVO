@@ -1,0 +1,159 @@
+---
+/* ==========================================================
+   PRICING CARD — tarjeta de un plan de precios
+   El botón abre WhatsApp con un mensaje que ya dice el plan.
+   ========================================================== */
+import Button from "./Button.astro";
+import { crearEnlaceWhatsapp } from "../../data/site.js";
+
+const { plan, moneda } = Astro.props;
+
+// Mensaje que llegará a tu WhatsApp
+const mensaje = `Hola, me interesa el plan ${plan.nombre}. ¿Me dan más información?`;
+const enlaceWhatsapp = crearEnlaceWhatsapp(mensaje);
+
+// Si el plan está destacado, agregamos una clase extra
+const clases = plan.destacado ? "pricing-card pricing-card--destacado" : "pricing-card";
+---
+
+<article class={clases}>
+  {plan.destacado && <p class="pricing-card__insignia">Más popular</p>}
+
+  <h3 class="pricing-card__nombre">{plan.nombre}</h3>
+  <p class="pricing-card__descripcion">{plan.descripcion}</p>
+
+  <p class="pricing-card__precio">
+    <span class="pricing-card__moneda">{moneda}</span>
+    {plan.precio}
+    <span class="pricing-card__periodo">/ {plan.periodo}</span>
+  </p>
+
+  <ul class="pricing-card__beneficios">
+    {plan.beneficios.map((beneficio: string) => (
+      <li class="pricing-card__beneficio">{beneficio}</li>
+    ))}
+  </ul>
+
+  <div class="pricing-card__accion">
+    <Button href={enlaceWhatsapp} variante={plan.destacado ? "primario" : "secundario"} externo>
+      Elegir plan
+    </Button>
+  </div>
+</article>
+
+<style>
+  .pricing-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--espacio-lg) var(--espacio-md);
+    border-radius: var(--radio-lg);
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    transition:
+      transform var(--transicion-normal),
+      box-shadow var(--transicion-normal);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-suave);
+  }
+
+  /* ---------- Plan destacado: oscuro y un poco más grande ---------- */
+  .pricing-card--destacado {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-claro);
+    border-color: var(--color-primario);
+    box-shadow: var(--sombra-fuerte);
+  }
+
+  .pricing-card--destacado:hover {
+    box-shadow: var(--sombra-fuerte);
+  }
+
+  .pricing-card__insignia {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%); /* la centra sobre el borde superior */
+    padding: 0.3rem 1rem;
+    border-radius: var(--radio-pildora);
+    background-color: var(--color-acento);
+    color: var(--color-marino);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-medio);
+    white-space: nowrap;
+  }
+
+  .pricing-card__nombre {
+    margin-bottom: var(--espacio-xs);
+  }
+
+  .pricing-card__descripcion {
+    margin-bottom: var(--espacio-md);
+    font-size: var(--texto-sm);
+    opacity: 0.8;
+  }
+
+  /* ---------- Precio ---------- */
+  .pricing-card__precio {
+    margin-bottom: var(--espacio-md);
+    font-family: var(--fuente-titulos);
+    font-size: var(--texto-3xl);
+    font-weight: var(--peso-extrabold);
+    line-height: 1;
+  }
+
+  .pricing-card__moneda {
+    font-size: var(--texto-xl);
+    vertical-align: top;
+  }
+
+  .pricing-card__periodo {
+    font-family: var(--fuente-texto);
+    font-size: var(--texto-base);
+    font-weight: var(--peso-normal);
+    opacity: 0.7;
+  }
+
+  /* ---------- Beneficios con "pixel" en lugar de viñeta ---------- */
+  .pricing-card__beneficios {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-xs);
+    margin-bottom: var(--espacio-lg);
+    flex-grow: 1; /* empuja el botón hacia abajo: todos quedan alineados */
+  }
+
+  .pricing-card__beneficio {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-xs);
+  }
+
+  .pricing-card__beneficio::before {
+    content: "";
+    flex-shrink: 0; /* el pixel nunca se aplasta */
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background-color: var(--color-acento);
+  }
+
+  .pricing-card__accion {
+    text-align: center;
+  }
+
+  /* En computadora, el destacado se ve un poco más grande */
+  @media (min-width: 900px) {
+    .pricing-card--destacado {
+      transform: scale(1.05);
+    }
+
+    .pricing-card--destacado:hover {
+      transform: scale(1.05) translateY(-6px);
+    }
+  }
+</style>
